@@ -58,6 +58,6 @@ public class FirstPersonController : MonoBehaviour {
     }
 
     bool IsGrounded() {
-        return Physics.Raycast(transform.position, Vector3.down, 1.1f);
+        return Physics.Raycast(transform.position, Vector3.down, 2.1f);
     }
 }

@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour {
     [SerializeField, Range(0,100)] float shootDistance = 20;
     [SerializeField, Range(0.1f, 5f)] float secondsBetweenShoots = 0.5f;
     [SerializeField] float shootForce = 1000;
+    [SerializeField] float health = 50f;
 
     void Awake() {
         player = FindObjectOfType<Player>();
@@ -49,4 +50,26 @@ public class EnemyController : MonoBehaviour {
     void OnDrawGizmosSelected() {
         Gizmos.DrawWireSphere(transform.position, shootDistance);
     }
+    
+
+    public float TakeDamage(float amount)
+    {
+        health -= amount;
+        
+
+        if (health < 0)
+        {
+            Die();
+            
+        }
+        return amount;
+    }
+
+
+
+    void Die()
+    {
+        Destroy(gameObject);
+    }
+
 }

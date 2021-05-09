@@ -9,11 +9,18 @@ public class Gun : MonoBehaviour
 
     public Camera fpsCam;
     public ParticleSystem MuzzleFlash;
+    public GameObject impactEffect;
+    public float impactForce = 30f;
+    public float fireRate = 5f;
+
+    private float nextTimeToFire = 0f;
+
 
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
         {
+            nextTimeToFire = Time.time + 1f / fireRate;
             Shoot();
         }    
     }
@@ -33,7 +40,16 @@ public class Gun : MonoBehaviour
             if (target != null)
             {
                 target.TakeDamage(damage);
+
             }
+
+            if (hit.rigidbody != null)
+            {
+                hit.rigidbody.AddForce(-hit.normal * impactForce);
+            }
+            
+            GameObject impactGO =  Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            Destroy(impactGO, 1f);
         }
 
     }

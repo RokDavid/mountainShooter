@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour {
     [SerializeField, Range(0.1f, 5f)] float secondsBetweenShoots = 0.5f;
     [SerializeField] float shootForce = 1000;
     [SerializeField] float health = 50f;
+    public AudioSource audio;
 
     void Awake() {
         player = FindObjectOfType<Player>();
@@ -59,6 +60,7 @@ public class EnemyController : MonoBehaviour {
 
         if (health < 0)
         {
+            audio.Play();
             Die();
             
         }
@@ -69,6 +71,7 @@ public class EnemyController : MonoBehaviour {
 
     void Die()
     {
+        
         Destroy(gameObject);
     }
 

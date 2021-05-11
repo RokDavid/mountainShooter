@@ -12,7 +12,7 @@ public class Gun : MonoBehaviour
     public GameObject impactEffect;
     public float impactForce = 30f;
     public float fireRate = 5f;
-
+    public AudioSource piu;
     private float nextTimeToFire = 0f;
 
 
@@ -29,7 +29,7 @@ public class Gun : MonoBehaviour
     void Shoot()
     {
         MuzzleFlash.Play();
-
+        piu.Play();
         RaycastHit hit;
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
@@ -38,6 +38,7 @@ public class Gun : MonoBehaviour
 
             EnemyController target = hit.transform.GetComponent<EnemyController>();
             nonEnemy target2 = hit.transform.GetComponent<nonEnemy>();
+            endGame finish = hit.transform.GetComponent<endGame>();
 
             if (target2 != null)
             {
@@ -55,7 +56,10 @@ public class Gun : MonoBehaviour
             {
                 hit.rigidbody.AddForce(-hit.normal * impactForce);
             }
-            
+            if (finish != null)
+            {
+                Application.Quit();
+            }
             GameObject impactGO =  Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
             Destroy(impactGO, 1f);
         }

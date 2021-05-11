@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class nonEnemy : MonoBehaviour
 {
+
+
     [SerializeField] float health = 50f;
     public ParticleSystem fire;
+    public GameObject GameObject;
+    
 
     public float TakeDamage(float amount)
     {
@@ -14,10 +18,10 @@ public class nonEnemy : MonoBehaviour
 
         if (health < 20)
         {
+            Explode();
 
             if (health < 0)
             {
-                SetFire();
                 Die();
             }
             
@@ -27,17 +31,22 @@ public class nonEnemy : MonoBehaviour
     }
 
 
-    void SetFire()
+    
+    void Explode()
     {
-        var location = gameObject.transform.position;
+        float xA = gameObject.transform.position.x;
+        float yA = gameObject.transform.position.x;
+        float zA = gameObject.transform.position.x;
+
+        fire.transform.position = new Vector3(xA, yA, zA);
         Instantiate(fire);
-        fire.Play();
-        fire.transform.position = location;
+        
+    
     }
+
 
     void Die()
     {
-
         Destroy(gameObject);
     }
 }

@@ -7,10 +7,16 @@ public class FirstPersonController : MonoBehaviour {
     public float jumpForce = 5;
     new CinemachineVirtualCamera camera;
     new Rigidbody rigidbody;
+    CursorLockMode lockMode;
 
+ 
+        
+    
     void Awake() {
         rigidbody = GetComponent<Rigidbody>();
         camera = GetComponentInChildren<CinemachineVirtualCamera>();
+        lockMode = CursorLockMode.Locked;
+        Cursor.lockState = lockMode;
     }
 
     int howManyTimesPlayerCanJump;

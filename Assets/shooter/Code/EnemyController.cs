@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour {
     [SerializeField] Transform bulletSpawnPoint; 
     [SerializeField, Range(0,100)] float shootDistance = 20;
     [SerializeField, Range(0.1f, 5f)] float secondsBetweenShoots = 0.5f;
+    [SerializeField, Range(0.1f, 5f)] float secondOfExistingBullets = 4;
     [SerializeField] float shootForce = 1000;
     [SerializeField] float health = 50f;
     public AudioSource audio;
@@ -38,14 +39,20 @@ public class EnemyController : MonoBehaviour {
         
         var playerDirection = (player.transform.position - bulletSpawnPoint.position).normalized;
         bullet.GetComponent<Rigidbody>().AddForce(playerDirection * shootForce, ForceMode.VelocityChange);
+        Destroy(bullet, 3f);
     }
 
     bool IsPlayerCloseEnough() {
+        
         return Vector3.Distance(player.transform.position, transform.position) < shootDistance;
     }
 
     void Update() {
-        transform.LookAt(player.transform.position);
+        if (Vector3.Distance(player.transform.position, transform.position) < shootDistance)
+        {
+            transform.LookAt(player.transform.position);
+        }
+
     }
 
     void OnDrawGizmosSelected() {
